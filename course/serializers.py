@@ -10,7 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class BranchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
-        fields = '__all__'
+        fields = ['latitude', 'longitude', 'address']
 
 class ContactSerializer( serializers.ModelSerializer):
     class Meta:
