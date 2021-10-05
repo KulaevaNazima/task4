@@ -17,10 +17,18 @@ class ContactSerializer( serializers.ModelSerializer):
         model = Contact
         fields = ['type', 'value']
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseViewSerializer(serializers.ModelSerializer):
     branches=BranchSerializer(many=True)
     contacts=ContactSerializer(many=True)
     category=CategorySerializer()
+    
+    class Meta:
+        model =Course
+        fields = ['id', 'name', 'description', 'logo', 'category','branches', 'contacts']
+
+class CourseSerializer(serializers.ModelSerializer):
+    branches=BranchSerializer(many=True)
+    contacts=ContactSerializer(many=True)
 
     class Meta:
         model =Course
@@ -37,3 +45,4 @@ class CourseSerializer(serializers.ModelSerializer):
        for branch_data in branches_data:
            Branch.objects.create(course=course, **branch_data)
        return course
+
