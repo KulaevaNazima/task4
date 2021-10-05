@@ -11,11 +11,12 @@ class CourseListView(APIView):
     
     def get(self, request, format=None):
         courses = Course.objects.all()
-        serializer = CourseSerializer(courses, many=True)
+        serializer = CourseViewSerializer(courses, many=True)
         return Response(serializer.data)
     
     def post(self, request, format=None):
         serializer = CourseSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         if serializer.is_valid:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -38,4 +39,5 @@ class CourseDetailView(APIView):
         course = self.get_object(pk)
         course.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
